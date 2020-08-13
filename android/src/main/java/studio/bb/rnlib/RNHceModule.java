@@ -101,6 +101,24 @@ public class RNHceModule extends ReactContextBaseJavaModule implements Lifecycle
         }
     }
 
+    @ReactMethod
+    public void removeAids(Promise promise) {
+        try {
+            NfcManager manager = (NfcManager) this.reactContext.getSystemService(this.reactContext.NFC_SERVICE);
+            NfcAdapter adapter = manager.getDefaultAdapter();
+            if (adapter != null) {
+                CardEmulation cardEmulation = CardEmulation.getInstance(adapter);
+                ComponentName serviceComponent = new ComponentName(this.reactContext, CardService.class); 
+                boolean aidsRemoved = cardEmulation.removeAidsForService(serviceComponent, "other");
+                promise.resolve(aidsRemoved);
+            } else {
+                throw new IllegalStateException("No NFC adapted found");
+            }
+        } catch (Exception e) {
+            promise.reject(e);
+        }
+    }
+
     @Override
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
