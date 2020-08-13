@@ -1,5 +1,8 @@
-export function supportNFC(): { support: boolean; enabled: boolean };
-export function listenNFCStatus(): (
-  callback: (enabled: boolean) => void
-) => void;
-export function setCardContent(content: string): void;
+declare const _default: {
+  supportNFC: () => { support: boolean; enabled: boolean };
+  listenNFCStatus: (callback: (enabled: boolean) => void) => void;
+  setCardContent: (content: string) => void;
+  registerAids: (aids: string[]) => Promise<boolean>;
+  removeAids: () => Promise<boolean>;
+};
+export default _default;
