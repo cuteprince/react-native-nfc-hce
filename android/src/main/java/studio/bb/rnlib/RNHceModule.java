@@ -5,8 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ComponentName;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
+import android.nfc.cardemulation.CardEmulation;
 import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.Arguments;
@@ -26,6 +28,10 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
+
+import studio.bb.rnlib.utils.ArrayUtil;
 
 public class RNHceModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
@@ -72,6 +78,27 @@ public class RNHceModule extends ReactContextBaseJavaModule implements Lifecycle
     @ReactMethod
     public void setCardContent(String content) {
         IDWarehouse.SetID(this.reactContext, content);
+    }
+
+    @ReactMethod
+    public void registerAids(ReadableArray aids, Promise promise) {
+        try {
+            Object[] objectArray = ArrayUtil.toArray(aids);
+            String[] stringArray = Arrays.copyOf(objectArray, objectArray.length, String[].class);
+            NfcManager manager = (NfcManager) this.reactContext.getSystemService(this.reactContext.NFC_SERVICE);
+            NfcAdapter adapter = manager.getDefaultAdapter();
+            if (adapter != null) {
+                CardEmulation cardEmulation = CardEmulation.getInstance(adapter);
+                ComponentName serviceComponent = new ComponentName(this.reactContext, CardService.class); 
+                List<String> dynamicAIDs = Arrays.asList(stringArray);
+                boolean aidsRegistered = cardEmulation.registerAidsForService(serviceComponent, "other", dynamicAIDs);
+                promise.resolve(aidsRegistered);
+            } else {
+                throw new IllegalStateException("No NFC adapted found");
+            }
+        } catch (Exception e) {
+            promise.reject(e);
+        }
     }
 
     @Override
