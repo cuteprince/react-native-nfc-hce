@@ -108,10 +108,18 @@ public class CardService extends HostApduService {
     private NdefRecord NDEF_URI = null;
     private byte[] NDEF_URI_BYTES = null;
     private byte[] NDEF_URI_LEN = null;
+    
+    // idTag is the variable that is going to hold NDEF message
     private String idTag = null;
 
     @Override
     public byte[] processCommandApdu(byte[] commandApdu, Bundle extras) {
+
+        if (IDWarehouse.isEmptyID(this.getApplicationContext())) {
+            showToast(ToastWarehouse.getErrorToast(this.getApplicationContext()));
+            Log.wtf(TAG, "processCommandApdu() | No Idtag set for user or retrieved from context!!!");
+            return A_ERROR;
+        }
 
         //
         // The following flow is based on Appendix E "Example of Mapping Version 2.0
@@ -146,13 +154,7 @@ public class CardService extends HostApduService {
                     + ByteUtils.bytesToHex(READ_CAPABILITY_CONTAINER_RESPONSE));
             READ_CAPABILITY_CONTAINER_CHECK = true;
 
-            if (IDWarehouse.isEmptyID(getApplicationContext())) {
-                showToast("esCharge: No NFC ID Tag has been configured for you. Please login first or contact support");
-                Log.wtf(TAG, "processCommandApdu() | No Idtag set for user or retrieved from context!!!");
-                return A_ERROR;
-            }
-
-            String currentIdTag = IDWarehouse.GetID(getApplicationContext());
+            String currentIdTag = IDWarehouse.getID(this.getApplicationContext());
             if (!TextUtils.equals(idTag, currentIdTag)) {
                 idTag = currentIdTag;
                 Log.i(TAG, "idTag reset: " + idTag);
@@ -212,7 +214,7 @@ public class CardService extends HostApduService {
             Log.i(TAG, "Our Response: " + ByteUtils.bytesToHex(response));
             READ_CAPABILITY_CONTAINER_CHECK = false;
 
-            showToast("Your NFC ID Tag has been communicated successfully to charger!");
+            showToast(ToastWarehouse.getSuccessToast(this.getApplicationContext()));
 
             return response;
         }
@@ -247,7 +249,7 @@ public class CardService extends HostApduService {
     }
 
     private void showToast(CharSequence text) {
-        Context context = getApplicationContext();
+        Context context = this.getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.setGravity(Gravity.BOTTOM, 0, 0);

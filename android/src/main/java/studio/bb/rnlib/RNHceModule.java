@@ -76,7 +76,17 @@ public class RNHceModule extends ReactContextBaseJavaModule implements Lifecycle
 
     @ReactMethod
     public void setCardContent(String content) {
-        IDWarehouse.SetID(this.reactContext, content);
+        IDWarehouse.setID(this.reactContext, content);
+    }
+
+    @ReactMethod
+    public void setSuccessToast(String content) {
+        ToastWarehouse.setSuccessToast(this.reactContext, content);
+    }
+
+    @ReactMethod
+    public void setErrorToast(String content) {
+        ToastWarehouse.setErrorToast(this.reactContext, content);
     }
 
     @ReactMethod

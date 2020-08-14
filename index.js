@@ -19,5 +19,11 @@ export default {
   },
   removeAids: async function () {
     return await RNHce.removeAids();
-  }
+  },
+  setSuccessToast: function (content) {
+    RNHce.setSuccessToast(content);
+  },
+  setErrorToast: function (content) {
+    RNHce.setErrorToast(content);
+  },
 };

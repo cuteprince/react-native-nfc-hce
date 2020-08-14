@@ -13,7 +13,7 @@ public class IDWarehouse {
     private static String sID = null;
     private static final Object sIDLock = new Object();
 
-    public static void SetID(Context c, String s) {
+    public static void setID(Context c, String s) {
         synchronized (sIDLock) {
             Log.i(TAG, "Setting ID: " + s);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
@@ -22,7 +22,7 @@ public class IDWarehouse {
         }
     }
 
-    public static String GetID(Context c) {
+    public static String getID(Context c) {
         synchronized (sIDLock) {
             if (sID == null) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
