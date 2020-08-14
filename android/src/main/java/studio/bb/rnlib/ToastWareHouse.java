@@ -7,8 +7,8 @@ import android.util.Log;
 
 public class ToastWarehouse {
 
-    private static final String S_TOAST = null;
-    private static final String E_TOAST = null;
+    private static String S_TOAST = null;
+    private static String E_TOAST = null;
     private static final String DEFAULT_S_TOAST = "Your NFC ID Tag has been communicated successfully to charger!";
     private static final String DEFAULT_E_TOAST = "esCharge: No NFC ID Tag has been configured for you. Please login first or contact support";
     private static final String TAG = "ToastWarehouse";
