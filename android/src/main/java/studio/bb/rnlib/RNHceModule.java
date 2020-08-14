@@ -1,4 +1,3 @@
-
 package studio.bb.rnlib;
 
 import android.content.BroadcastReceiver;
