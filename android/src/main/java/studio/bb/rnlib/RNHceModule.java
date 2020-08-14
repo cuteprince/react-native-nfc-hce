@@ -166,4 +166,5 @@ public class RNHceModule extends ReactContextBaseJavaModule implements Lifecycle
     public void onHostDestroy() {
         this.reactContext.unregisterReceiver(mReceiver);
     }
+
 }
