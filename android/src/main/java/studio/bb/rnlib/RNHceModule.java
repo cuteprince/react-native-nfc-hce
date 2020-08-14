@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.Arrays;
 import java.util.List;
 
-import studio.bb.rnlib.utils.ArrayUtil;
+import studio.bb.rnlib.utils.ArrayUtils;
 
 public class RNHceModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
@@ -83,7 +83,7 @@ public class RNHceModule extends ReactContextBaseJavaModule implements Lifecycle
     @ReactMethod
     public void registerAids(ReadableArray aids, Promise promise) {
         try {
-            Object[] objectArray = ArrayUtil.toArray(aids);
+            Object[] objectArray = ArrayUtils.toArray(aids);
             String[] stringArray = Arrays.copyOf(objectArray, objectArray.length, String[].class);
             NfcManager manager = (NfcManager) this.reactContext.getSystemService(this.reactContext.NFC_SERVICE);
             NfcAdapter adapter = manager.getDefaultAdapter();

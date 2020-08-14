@@ -23,7 +23,7 @@ package studio.bb.rnlib.utils;
 /**
  * Byte utilities
  */
-public class ByteUtil {
+public class ByteUtils {
 
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
@@ -149,5 +149,17 @@ public class ByteUtil {
         }
         return new String(hexChars);
     }
+
+    public static byte[] fillByteArrayToFixedDimension(byte[] source, int fixedSize) {
+      if (source.length == fixedSize) {
+          return source;
+      }
+
+      byte[] start = {(byte) 0x00};
+      byte[] filledArray = new byte[start.length + source.length];
+      System.arraycopy(start, 0, filledArray, 0, start.length);
+      System.arraycopy(source, 0, filledArray, start.length, source.length);
+      return fillByteArrayToFixedDimension(filledArray, fixedSize);
+  }
 
 }

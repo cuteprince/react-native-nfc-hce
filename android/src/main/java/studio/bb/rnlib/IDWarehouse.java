@@ -32,4 +32,9 @@ public class IDWarehouse {
             return sID;
         }
     }
+
+    public static boolean isEmptyID(Context c) {
+        return sID == DEFAULT_ID;
+    }
+    
 }

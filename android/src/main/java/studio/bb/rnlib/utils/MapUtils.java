@@ -1,5 +1,5 @@
 /*
-  MapUtil exposes a set of helper methods for working with
+  MapUtils exposes a set of helper methods for working with
   ReadableMap (by React Native), Map<String, Object>, and JSONObject.
  */
 
@@ -20,7 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-public class MapUtil {
+public class MapUtils {
 
     public static JSONObject toJSONObject(ReadableMap readableMap) throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -45,10 +45,10 @@ public class MapUtil {
                     jsonObject.put(key, readableMap.getString(key));
                     break;
                 case Map:
-                    jsonObject.put(key, MapUtil.toJSONObject(readableMap.getMap(key)));
+                    jsonObject.put(key, MapUtils.toJSONObject(readableMap.getMap(key)));
                     break;
                 case Array:
-                    jsonObject.put(key, ArrayUtil.toJSONArray(readableMap.getArray(key)));
+                    jsonObject.put(key, ArrayUtils.toJSONArray(readableMap.getArray(key)));
                     break;
             }
         }
@@ -65,10 +65,10 @@ public class MapUtil {
             Object value = jsonObject.get(key);
 
             if (value instanceof JSONObject) {
-                value = MapUtil.toMap((JSONObject) value);
+                value = MapUtils.toMap((JSONObject) value);
             }
             if (value instanceof JSONArray) {
-                value = ArrayUtil.toArray((JSONArray) value);
+                value = ArrayUtils.toArray((JSONArray) value);
             }
 
             map.put(key, value);
@@ -99,10 +99,10 @@ public class MapUtil {
                     map.put(key, readableMap.getString(key));
                     break;
                 case Map:
-                    map.put(key, MapUtil.toMap(readableMap.getMap(key)));
+                    map.put(key, MapUtils.toMap(readableMap.getMap(key)));
                     break;
                 case Array:
-                    map.put(key, ArrayUtil.toArray(readableMap.getArray(key)));
+                    map.put(key, ArrayUtils.toArray(readableMap.getArray(key)));
                     break;
             }
         }
@@ -129,10 +129,10 @@ public class MapUtil {
             } else if (value instanceof String) {
                 writableMap.putString((String) pair.getKey(), (String) value);
             } else if (value instanceof Map) {
-                writableMap.putMap((String) pair.getKey(), MapUtil.toWritableMap((Map<String,
+                writableMap.putMap((String) pair.getKey(), MapUtils.toWritableMap((Map<String,
                         Object>) value));
             } else if (value.getClass() != null && value.getClass().isArray()) {
-                writableMap.putArray((String) pair.getKey(), ArrayUtil.toWritableArray((Object[])
+                writableMap.putArray((String) pair.getKey(), ArrayUtils.toWritableArray((Object[])
                         value));
             }
 
@@ -152,7 +152,7 @@ public class MapUtil {
             if (value instanceof JSONObject) {
                 map.putMap(key, convertJsonToWritableMap((JSONObject) value));
             } else if (value instanceof  JSONArray) {
-                map.putArray(key, ArrayUtil.convertJsonToWritableArray((JSONArray) value));
+                map.putArray(key, ArrayUtils.convertJsonToWritableArray((JSONArray) value));
             } else if (value instanceof  Boolean) {
                 map.putBoolean(key, (Boolean) value);
             } else if (value instanceof  Integer) {

@@ -1,5 +1,5 @@
 /*
-  ArrayUtil exposes a set of helper methods for working with
+  ArrayUtils exposes a set of helper methods for working with
   ReadableArray (by React Native), Object[], and JSONArray.
  */
 
@@ -17,7 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-public class ArrayUtil {
+public class ArrayUtils {
 
     public static JSONArray toJSONArray(ReadableArray readableArray) throws JSONException {
         JSONArray jsonArray = new JSONArray();
@@ -42,7 +42,7 @@ public class ArrayUtil {
                     jsonArray.put(i, MapUtil.toJSONObject(readableArray.getMap(i)));
                     break;
                 case Array:
-                    jsonArray.put(i, ArrayUtil.toJSONArray(readableArray.getArray(i)));
+                    jsonArray.put(i, ArrayUtils.toJSONArray(readableArray.getArray(i)));
                     break;
             }
         }
@@ -82,7 +82,7 @@ public class ArrayUtil {
                 value = MapUtil.toMap((JSONObject) value);
             }
             if (value instanceof JSONArray) {
-                value = ArrayUtil.toArray((JSONArray) value);
+                value = ArrayUtils.toArray((JSONArray) value);
             }
 
             array[i] = value;
@@ -114,7 +114,7 @@ public class ArrayUtil {
                     array[i] = MapUtil.toMap(readableArray.getMap(i));
                     break;
                 case Array:
-                    array[i] = ArrayUtil.toArray(readableArray.getArray(i));
+                    array[i] = ArrayUtils.toArray(readableArray.getArray(i));
                     break;
             }
         }
@@ -147,7 +147,7 @@ public class ArrayUtil {
                 writableArray.pushMap(MapUtil.toWritableMap((Map<String, Object>) value));
             }
             if (value.getClass().isArray()) {
-                writableArray.pushArray(ArrayUtil.toWritableArray((Object[]) value));
+                writableArray.pushArray(ArrayUtils.toWritableArray((Object[]) value));
             }
         }
 
