@@ -147,7 +147,7 @@ public class CardService extends HostApduService {
             READ_CAPABILITY_CONTAINER_CHECK = true;
 
             if (IDWarehouse.isEmptyID(getApplicationContext())) {
-                showToast("No NFC ID Tag has been configured for you. Please contact support");
+                showToast("esCharge: No NFC ID Tag has been configured for you. Please login first or contact support");
                 Log.wtf(TAG, "processCommandApdu() | No Idtag set for user or retrieved from context!!!");
                 return A_ERROR;
             }
