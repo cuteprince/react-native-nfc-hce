@@ -25,5 +25,5 @@ export default {
   },
   setErrorToast: function (content) {
     RNHce.setErrorToast(content);
-  },
+  }
 };
